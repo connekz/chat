@@ -3,6 +3,11 @@
 All notable changes to @connekz/chat will be documented in this file.
 
 ## [Unreleased]
+
+## [1.0.0] - 2025-05-03
+### Added
+- Initial release.
+
 ### Added
 - Initial project setup.
 
