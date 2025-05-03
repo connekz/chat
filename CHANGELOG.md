@@ -4,6 +4,11 @@ All notable changes to @connekz/chat will be documented in this file.
 
 ## [Unreleased]
 
+## [1.0.1] - 2025-05-03
+### Fixed
+- Type issues in the `initConnekzChat` function.
+
+
 ## [1.0.0] - 2025-05-03
 ### Added
 - Initial release.
