@@ -4,6 +4,13 @@ All notable changes to @connekz/chat will be documented in this file.
 
 ## [Unreleased]
 
+## [1.1.0] - 2025-05-04
+### Added
+- 
+### Changed
+- Framework changed from vuetify to tailwindcss with daisyui. 
+
+
 
 ## [1.0.6] - 2025-05-03
 ### Fixed
