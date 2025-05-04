@@ -1,100 +1,176 @@
-# @connekz/chat
+# Connekz Chat
 
-A lightweight and powerful chat widget for businesses to integrate seamless communication into their websites.  
-Built with Vue 3 and Vuetify, this package allows Connekz clients to embed a fully-featured chat application with support for text chat, voice messages, file sharing, audio/video calls, and AI-driven features like auto-replies and booking form filling.
+![Connekz Logo](https://storage.connekz.com/static/logos/logo-120.webp)
 
----
+Connekz Chat is a powerful, cross-platform chat solution designed for businesses to seamlessly integrate real-time communication into websites and mobile applications. This official npm package enables developers to embed text chat, voice messages, file sharing, audio/video calls, and AI-driven features into their projects. It supports web, iOS, and Android platforms, with comprehensive event handling and functions for external control, making it ideal for custom chat applications.
 
-## About Connekz
+## Features
 
-Connekz is a cross-platform chat application designed for businesses, offering a unified communication solution across web, iOS, and Android. Key features include:
-
-- **Text Chat**: Real-time messaging for business-client communication.
-- **Voice Messages**: Send and receive voice notes.
-- **File Sharing**: Securely share files with clients.
-- **Audio/Video Calls**: High-quality calls for direct interaction.
-- **AI-Driven Features**: Auto-replies based on business data, booking form filling, and more.
-- **Third-Party Integrations**: Connect with WhatsApp, Messenger, and Instagram to centralize communication.
-- **Customizable Apps**: Create branded chat apps with different settings via the Connekz Portal.
-
-Learn more at the Connekz Website (placeholder—replace with the actual URL if available) or manage your chat apps through the Connekz Portal (placeholder—replace with the actual URL if available).
-
----
+- **Text Chat**: Real-time messaging with support for group and private conversations.
+- **Voice Messages**: Send and receive voice recordings.
+- **File Sharing**: Securely share files of various formats.
+- **Audio/Video Calls**: High-quality calls with cross-platform support.
+- **AI-Driven Auto Reply**: Configure automated responses based on business data for customer support, booking forms, and more.
+- **Mobile App Integration**: Full support for iOS and Android, including call/notification events and external control functions.
+- **Cross-Platform**: Works seamlessly on web, iOS, and Android with a unified API.
+- **Social Media Integration**: Link WhatsApp, Messenger, and Instagram for centralized communication.
+- **Comprehensive APIs**: Manage users, messages, and settings programmatically.
+- **Custom Branding**: Create multiple chat apps under one organization with unique branding and settings.
+- **Connekz Handle**: Unique user handles for easy connection via QR code scanning.
+- **Web Portal**: Manage organizations and chat apps through a dedicated web interface.
 
 ## Installation
 
-Install the package via npm:
+Install the Connekz Chat package via npm:
 
 ```bash
 npm install @connekz/chat
 ```
 
----
+## Usage
 
-## Setup and Usage Guide
+### Web Integration
 
-### 1. Import and Initialize the Chat Widget
-
-Add the chat widget to your website by importing and initializing it in your JavaScript or TypeScript code.
+To integrate Connekz Chat into a website, import and initialize the package:
 
 ```javascript
-import { initConnekzChat } from '@connekz/chat';
+import ConnekzChat from '@connekz/chat';
 
-// Initialize the chat widget in a DOM element with the specified ID
-const chat = initConnekzChat('connekz-chat');
+const chat = new ConnekzChat({
+  apiKey: 'YOUR_API_KEY',
+  organizationId: 'YOUR_ORG_ID',
+  appId: 'YOUR_APP_ID',
+  containerId: 'chat-container' // ID of the HTML element to mount the chat
+});
+
+// Initialize the chat
+chat.init();
 ```
 
-### 2. Add the Container Element
-
-Ensure you have a `<div>` element in your HTML where the chat widget will be mounted. The widget will respect the dimensions of this element.
+Add a container in your HTML:
 
 ```html
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Connekz Chat Integration</title>
-</head>
-<body>
-  <h1>My Website with Connekz Chat</h1>
-  <!-- Container for the chat widget -->
-  <div id="connekz-chat" style="width: 400px; height: 600px; border: 2px solid black;"></div>
-
-  <!-- Import the chat widget -->
-  <script type="module">
-    import { initConnekzChat } from '@connekz/chat';
-    const chat = initConnekzChat('connekz-chat');
-
-    // Optional: Unmount the chat after a certain time
-    setTimeout(() => {
-      chat.unmount();
-      console.log('Chat unmounted');
-    }, 10000);
-  </script>
-</body>
-</html>
+<div id="chat-container"></div>
 ```
 
-### 3. Customize the Chat Widget
+### Mobile App Integration
 
-- **Dimensions**: The chat widget will automatically fit within the dimensions of the `#connekz-chat` element. Adjust the `width` and `height` in the element's style to suit your needs.
-- **Styling**: The widget is encapsulated in a Shadow DOM, ensuring it doesn't interfere with your website's styles. However, you can style the container element (`#connekz-chat`) as needed.
-- **Features**: Configure features like AI auto-replies and third-party integrations via the Connekz Portal.
+For iOS and Android, use the package with Capacitor for native integration. The package provides events and functions to handle calls and notifications.
 
----
+```javascript
+import ConnekzChat from '@connekz/chat';
 
-## Documentation
+// Initialize for mobile
+const chat = new ConnekzChat({
+  apiKey: 'YOUR_API_KEY',
+  organizationId: 'YOUR_ORG_ID',
+  appId: 'YOUR_APP_ID',
+  platform: 'mobile' // Specify mobile platform
+});
 
-For detailed documentation on advanced configuration, API usage, and integration with the Connekz ecosystem, visit the Connekz Documentation (placeholder—replace with the actual URL if available).
+// Handle incoming call event
+chat.on('incomingCall', (callData) => {
+  console.log('Incoming call:', callData);
+  // Trigger native notification or UI
+});
 
----
+// Start a call
+chat.startCall({
+  userId: 'TARGET_USER_ID',
+  type: 'video' // or 'audio'
+});
+```
 
-## Support
+### Event Handling
 
-- **Issues**: Report bugs or request features on the GitHub Issues page.
-- **Connekz Support**: Contact the Connekz team via the Connekz Website for business-specific support or inquiries about the Connekz Portal.
+The package emits events for real-time updates, such as messages, calls, and notifications:
 
----
+```javascript
+// New message received
+chat.on('newMessage', (message) => {
+  console.log('New message:', message);
+});
+
+// Call ended
+chat.on('callEnded', (callData) => {
+  console.log('Call ended:', callData);
+});
+```
+
+### API Control
+
+Manage users and messages via the API:
+
+```javascript
+// Add a user
+chat.addUser({
+  userId: 'USER_ID',
+  name: 'John Doe',
+  handle: '@john'
+});
+
+// Send a message
+chat.sendMessage({
+  userId: 'USER_ID',
+  recipientId: 'RECIPIENT_ID',
+  content: 'Hello!'
+});
+```
+
+## Configuration
+
+Configure the chat with options during initialization:
+
+```javascript
+const chat = new ConnekzChat({
+  apiKey: 'YOUR_API_KEY',
+  organizationId: 'YOUR_ORG_ID',
+  appId: 'YOUR_APP_ID',
+  autoReply: {
+    enabled: true,
+    data: {
+      faq: {
+        'What are your hours?': 'We are open 9 AM to 5 PM.'
+      }
+    }
+  },
+  branding: {
+    primaryColor: '#007bff',
+    logoUrl: 'https://your-brand.com/logo.png'
+  },
+  integrations: {
+    whatsapp: { enabled: true, phoneNumber: '+1234567890' },
+    messenger: { enabled: true, pageId: 'YOUR_PAGE_ID' }
+  }
+});
+```
+
+## Web Portal
+
+Manage your organization and chat apps via the [Connekz Web Portal](https://connekz.com/portal). Create organizations, configure apps, and customize settings like branding and auto-reply rules.
+
+## Mobile App
+
+Download the Connekz mobile app from the [App Store](https://apple.com/app-store) or [Google Play](https://play.google.com) to communicate with businesses or individuals using Connekz.
+
+## API Documentation
+
+For detailed API documentation, visit [Connekz API Docs](https://connekz.com/docs/api).
+
+## Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature/your-feature`).
+3. Commit your changes (`git commit -m 'Add your feature'`).
+4. Push to the branch (`git push origin feature/your-feature`).
+5. Open a pull request.
 
 ## License
 
-This package is licensed under the MIT License. See the LICENSE file for details.
+MIT License. See [LICENSE](LICENSE) for details.
+
+## Support
+
+For issues or questions, contact us at [support@connekz.com](mailto:support@connekz.com) or open an issue on [GitHub](https://github.com/connekz/chat).
