@@ -4,6 +4,11 @@ All notable changes to @connekz/chat will be documented in this file.
 
 ## [Unreleased]
 
+## [1.3.0] - 2025-10-31
+### Added
+- A complete mvp of the chat. 
+
+
 ## [1.1.0] - 2025-05-04
 ### Added
 - 
